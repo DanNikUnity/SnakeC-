@@ -14,4 +14,5 @@ public:
    int GetSize() const;
    Point GetPosition() const;
    void Eat(const Apple& apple);
+   const Point* GetSegments() const;
 };

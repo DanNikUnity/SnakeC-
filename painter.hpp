@@ -1,9 +1,8 @@
 #pragma once
-
 #include "point.hpp"
+#include <vector>
 
 class Painter {
 public:
-   void DrawImage(Point topLeft, Point bottomRight, char** image);
-   void WriteText(Point position, char* text);
+   void DrawBoard(int width, int height, const std::vector<Point>& snake, Point apple);
 };
