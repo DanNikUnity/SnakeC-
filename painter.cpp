@@ -6,15 +6,21 @@
 void Painter::DrawBoard(int width, int height, const std::vector<Point>& snake, Point apple) {
     std::vector<std::string> grid(height, std::string(width, ' '));
 
+    // clear using provided height/width
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Array[y][x] = 0;
+        }
+    }
     if (apple.y >= 0 && apple.y < height && apple.x >= 0 && apple.x < width) {
-        grid[apple.y][apple.x] = 'A';
+        Array[apple.y][apple.x] = 2;
     }
 
     for (size_t i = 0; i < snake.size(); i++) {
         int x = snake[i].x;
         int y = snake[i].y;
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            grid[y][x] = (i == 0 ? 'O' : 'o');
+            Array[y][x] = 1;
         }
     }
 

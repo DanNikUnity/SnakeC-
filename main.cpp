@@ -1,8 +1,13 @@
-#include "game_engine.hpp"
+//#include "game_engine.hpp"
+#include "mainwindow.hpp"
+#include <QApplication>
 
-int main() {
-    GameEngine engine;
-    engine.Init();
-    engine.Run();
-    return 0;
+int main(int argc, char *argv[]) {
+  QApplication app(argc, argv);
+
+  MainWindow window;
+  window.setWindowTitle("Snake Game");
+  window.show();
+
+  return app.exec();
 }
