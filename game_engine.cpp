@@ -1,5 +1,4 @@
 #include "game_engine.hpp"
-#include "painter.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -8,7 +7,7 @@
 #include <vector>
 
 GameEngine::GameEngine()
-    : _apple(Point{5, 5}), _snake(Point{0, 0}), _board(20, 10) {}
+    : _apple(Point{5, 5}), _snake(Point{0, 0}), _board(10, 20) {}
 
 void GameEngine::Init() {
     std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -16,20 +15,18 @@ void GameEngine::Init() {
               << _board.GetWidth() << "x" << _board.GetHeight() << "\n";
 }
 
-void GameEngine::Run() {
-    Painter painter;
-    Direction dir = Direction::Right;
+void GameEngine::Run(Direction dir) {
     char input;
-    for (int step = 0; step < 100; step++) {
-        std::cout << "Move (WASD): ";
-        std::cin >> input;
-        switch (input) {
-            case 'w': dir = Direction::Top; break;
-            case 'a': dir = Direction::Left; break;
-            case 's': dir = Direction::Bottom; break;
-            case 'd': dir = Direction::Right; break;
-            default: break;
-        }
+   // for (int step = 0; step < 5; step++) {
+        // std::cout << "Move (WASD): ";
+        // std::cin >> input;
+        // switch (input) {
+        //     case 'w': dir = Direction::Top; break;
+        //     case 'a': dir = Direction::Left; break;
+        //     case 's': dir = Direction::Bottom; break;
+        //     case 'd': dir = Direction::Right; break;
+        //     default: break;
+        // }
         _snake.Move(dir);
 
         Point head = _snake.GetPosition();
@@ -46,13 +43,8 @@ void GameEngine::Run() {
             body.push_back(segs[i]);
         }
 
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
-
         painter.DrawBoard(_board.GetWidth(), _board.GetHeight(), body, _apple.GetPosition());
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
+
+        steps++;
+    //}
 }

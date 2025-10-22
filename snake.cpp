@@ -40,3 +40,48 @@ void Snake::Eat(const Apple &apple) {
 const Point* Snake::GetSegments() const {
    return _segments;
 }
+
+Snake::Snake(const Snake& other) : _nr_segments(other._nr_segments) {
+    for (int i = 0; i < _nr_segments; i++)
+        _segments[i] = other._segments[i];
+}
+
+Snake& Snake::operator=(const Snake& other) {
+    if (this != &other) {
+        _nr_segments = other._nr_segments;
+        for (int i = 0; i < _nr_segments; i++)
+            _segments[i] = other._segments[i];
+    }
+    return *this;
+}
+
+bool Snake::operator==(const Snake& other) const {
+    if (_nr_segments != other._nr_segments) return false;
+    for (int i = 0; i < _nr_segments; i++)
+        if (_segments[i] != other._segments[i])
+            return false;
+    return true;
+}
+
+bool Snake::operator!=(const Snake& other) const {
+    return !(*this == other);
+}
+
+std::ostream& operator<<(std::ostream& os, const Snake& s) {
+    os << "Snake(";
+    for (int i = 0; i < s._nr_segments; i++) {
+        os << s._segments[i];
+        if (i < s._nr_segments - 1) os << ", ";
+    }
+    os << ")";
+    return os;
+}
+
+std::istream& operator>>(std::istream& is, Snake& s) {
+    is >> s._nr_segments;
+    for (int i = 0; i < s._nr_segments; i++) {
+        is >> s._segments[i];
+    }
+    return is;
+}
+
