@@ -7,12 +7,3 @@ public:
     virtual ~IPainter() = default;
     virtual void DrawBoard(int width, int height, const std::vector<Point>& snake, Point apple) = 0;
 };
-
-
-class Painter : public IPainter {
-public:
-    int Array[20][10] = {};
-    void DrawBoard(int width, int height, const std::vector<Point>& snake, Point apple) override;
-};
-
-
