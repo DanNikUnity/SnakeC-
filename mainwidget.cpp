@@ -6,10 +6,7 @@
 
 GameFieldWidget::GameFieldWidget(QWidget *parent)
     : QWidget(parent) {
-          // painter.Array is [20][10] => height=20 rows, width=10 cols
-          // so width in cells = 10, height in cells = 20
           setFixedSize(10 * CELL_SIZE, 20 * CELL_SIZE);
-          // accept keyboard focus so keyPressEvent is called
           setFocusPolicy(Qt::StrongFocus);
           setFocus();
 
