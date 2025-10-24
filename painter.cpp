@@ -6,7 +6,6 @@
 void Painter::DrawBoard(int width, int height, const std::vector<Point>& snake, Point apple) {
     std::vector<std::string> grid(height, std::string(width, ' '));
 
-    // clear using provided height/width
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             Array[y][x] = 0;
