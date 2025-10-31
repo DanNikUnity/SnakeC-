@@ -3,25 +3,30 @@
 #include "direction.hpp"
 #include "point.hpp"
 #include <iostream>
+#include <vector>
+#include <memory>
+#include <algorithm>
 
 class Snake {
-    Point _segments[100];
-    int _nr_segments;
+    std::vector<Point> _segments;
+    
 public:
     Snake();
-    Snake(const Point& position);
-    Snake(const Snake& other);
-    Snake& operator=(const Snake& other);
-
+    explicit Snake(const Point& position);
+    Snake(const Snake& other) = default;
+    Snake& operator=(const Snake& other) = default;
+    
     bool operator==(const Snake& other) const;
     bool operator!=(const Snake& other) const;
-
+    
     void Move(Direction direction);
     int GetSize() const;
     Point GetPosition() const;
-    const Point* GetSegments() const;
+    const std::vector<Point>& GetSegments() const;
     void Eat(const Apple& apple);
-
+    
+    bool ContainsPoint(const Point& point) const;
+    
     friend std::ostream& operator<<(std::ostream& os, const Snake& s);
     friend std::istream& operator>>(std::istream& is, Snake& s);
 };

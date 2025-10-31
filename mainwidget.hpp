@@ -1,28 +1,28 @@
 #ifndef GAMEFIELDWIDGET_H
 #define GAMEFIELDWIDGET_H
-#include <QDebug>
-#include "game_engine.hpp"
 
+#include "game_engine.hpp"
 #include <QWidget>
+#include <memory>
 
 class GameFieldWidget : public QWidget {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  GameFieldWidget(QWidget *parent);
- public slots:
- void gameTick();
+public:
+    explicit GameFieldWidget(QWidget *parent = nullptr);
 
+public slots:
+    void gameTick();
 
- private:
-GameEngine _gameEngine;
+private:
+    std::unique_ptr<GameEngine> _gameEngine;
     Direction userAction = Direction::Right;
-
-  protected:
-  void paintEvent(QPaintEvent * event) override;
-  void keyPressEvent(QKeyEvent *event) override;
-
- static constexpr int CELL_SIZE = 40;
+    
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    
+    static constexpr int CELL_SIZE = 40;
 };
 
 #endif
