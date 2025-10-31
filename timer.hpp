@@ -12,14 +12,14 @@ class SnakeTimer : public QObject {
   explicit SnakeTimer(QObject* parent = nullptr);
   void start(int intervalMs);
   void stop();
-  void tickNow();  // вызвать следующий тик сразу
+  void tickNow();
  public slots:
   void forceUpdate();
   void intervalChange(const int newIntervalValue);
   void pauseToggled();
 
  signals:
-  void tick();  // сигнал тика игры
+  void tick();
 
  private slots:
   void onTimeout();
@@ -30,4 +30,4 @@ class SnakeTimer : public QObject {
   bool isPaused = false;
 };
 
-#endif  // SNAKETIMER_HPP
+#endif
