@@ -42,6 +42,10 @@ const std::vector<Point>& Snake::GetSegments() const {
     return _segments;
 }
 
+std::vector<Point>& Snake::GetSegments() {
+    return _segments;
+}
+
 void Snake::Eat(const Apple& apple) {
     if (!_segments.empty()) {
         _segments.push_back(_segments.back());
@@ -50,6 +54,12 @@ void Snake::Eat(const Apple& apple) {
 
 bool Snake::ContainsPoint(const Point& point) const {
     return std::find(_segments.begin(), _segments.end(), point) != _segments.end();
+}
+
+void Snake::SetHeadPosition(const Point& newPosition) {
+    if (!_segments.empty()) {
+        _segments[0] = newPosition;
+    }
 }
 
 std::ostream& operator<<(std::ostream& os, const Snake& s) {
