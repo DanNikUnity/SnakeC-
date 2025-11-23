@@ -14,43 +14,48 @@ GameEngine::GameEngine()
 
 void GameEngine::Init() {
     std::srand(static_cast<unsigned>(std::time(nullptr)));
-    std::cout << "Snake Game Initialized! Board " << _board->GetWidth() << "x" << _board->GetHeight() << "\n";
+    steps = 0;
+    gameOver = false;
 }
 
 void GameEngine::Run(Direction dir) {
     _snake->Move(dir);
     Point head = _snake->GetPosition();
     
+    int boardWidth = _board->GetWidth();
+    int boardHeight = _board->GetHeight();
+    
+    if (head.x < 0) head.x = boardWidth - 1;
+    else if (head.x >= boardWidth) head.x = 0;
+    
+    if (head.y < 0) head.y = boardHeight - 1;
+    else if (head.y >= boardHeight) head.y = 0;
+    
+    _snake->SetHeadPosition(head);
+
     if (head == _apple->GetPosition()) {
         _snake->Eat(*_apple);
-
         Point newApplePos = GenerateRandomApplePosition();
         _apple = std::make_unique<Apple>(newApplePos);
     }
     
     if (CheckCollision()) {
-        std::cout << "Game Over! Collision detected.\n";
+        gameOver = true;
         return;
     }
     
-    const auto& segments = _snake->GetSegments();
-    _painter->DrawBoard(_board->GetWidth(), _board->GetHeight(), segments, _apple->GetPosition());
+    const auto& snakeSegments = _snake->GetSegments();
+    _painter->DrawBoard(boardWidth, boardHeight, snakeSegments, _apple->GetPosition());
     steps++;
 }
 
+
 bool GameEngine::CheckCollision() const {
     Point head = _snake->GetPosition();
-    
-    if (head.x < 0 || head.x >= _board->GetWidth() || 
-        head.y < 0 || head.y >= _board->GetHeight()) {
-        return true;
-    }
-    
     const auto& segments = _snake->GetSegments();
     if (segments.size() > 1) {
         return std::find(segments.begin() + 1, segments.end(), head) != segments.end();
     }
-    
     return false;
 }
 
@@ -72,10 +77,4 @@ Point GameEngine::GenerateRandomApplePosition() const {
     
     int randomIndex = std::rand() % validPositions.size();
     return validPositions[randomIndex];
-}
-
-bool GameEngine::IsPositionValid(const Point& pos) const {
-    return pos.x >= 0 && pos.x < _board->GetWidth() && 
-           pos.y >= 0 && pos.y < _board->GetHeight() &&
-           !_snake->ContainsPoint(pos);
 }

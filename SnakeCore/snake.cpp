@@ -17,16 +17,30 @@ bool Snake::operator!=(const Snake& other) const {
 }
 
 void Snake::Move(Direction direction) {
-    for (size_t i = _segments.size() - 1; i > 0; --i) {
-        _segments[i] = _segments[i - 1];
+
+    Point newHead(0,0);
+    if (!_segments.empty()) newHead = _segments.front();
+    
+    switch (direction) {
+        case Direction::Top: newHead.y -= 1; break;
+        case Direction::Bottom: newHead.y += 1; break;
+        case Direction::Left: newHead.x -= 1; break;
+        case Direction::Right: newHead.x += 1; break;
     }
     
-    Point& head = _segments[0];
-    switch (direction) {
-        case Direction::Top: head.y -= 1; break;
-        case Direction::Bottom: head.y += 1; break;
-        case Direction::Left: head.x -= 1; break;
-        case Direction::Right: head.x += 1; break;
+    if (_segments.empty()) {
+        _segments.push_back(newHead);
+
+        if (_growNextMove) _growNextMove = false;
+        return;
+    }
+    
+
+    _segments.insert(_segments.begin(), newHead);
+    if (_growNextMove) {
+        _growNextMove = false;
+    } else {
+        _segments.pop_back();
     }
 }
 
@@ -42,14 +56,24 @@ const std::vector<Point>& Snake::GetSegments() const {
     return _segments;
 }
 
+std::vector<Point>& Snake::GetSegments() {
+    return _segments;
+}
+
 void Snake::Eat(const Apple& apple) {
-    if (!_segments.empty()) {
-        _segments.push_back(_segments.back());
-    }
+    (void)apple;
+
+    _growNextMove = true;
 }
 
 bool Snake::ContainsPoint(const Point& point) const {
     return std::find(_segments.begin(), _segments.end(), point) != _segments.end();
+}
+
+void Snake::SetHeadPosition(const Point& newPosition) {
+    if (!_segments.empty()) {
+        _segments[0] = newPosition;
+    }
 }
 
 std::ostream& operator<<(std::ostream& os, const Snake& s) {
