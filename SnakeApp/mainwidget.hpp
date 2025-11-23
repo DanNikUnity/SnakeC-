@@ -13,6 +13,7 @@ public:
 
 public slots:
     void gameTick();
+    void resetGame();
 
 private:
     std::unique_ptr<GameEngine> _gameEngine;
@@ -23,6 +24,10 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     
     static constexpr int CELL_SIZE = 40;
+
+signals:
+    void gameOverTriggered();
+
 };
 
 #endif

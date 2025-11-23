@@ -9,6 +9,8 @@
 
 class Snake {
     std::vector<Point> _segments;
+    // Added: defer growth until next Move to avoid immediate self-collision
+    bool _growNextMove = false;
     
 public:
     Snake();
@@ -24,6 +26,7 @@ public:
     Point GetPosition() const;
     const std::vector<Point>& GetSegments() const;
     std::vector<Point>& GetSegments();
+    // Changed: declaration only — implementation moved to snake.cpp
     void Eat(const Apple& apple);
     
     bool ContainsPoint(const Point& point) const;

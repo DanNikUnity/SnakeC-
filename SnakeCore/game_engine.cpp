@@ -14,7 +14,8 @@ GameEngine::GameEngine()
 
 void GameEngine::Init() {
     std::srand(static_cast<unsigned>(std::time(nullptr)));
-    std::cout << "Snake Game Initialized! Board " << _board->GetWidth() << "x" << _board->GetHeight() << "\n";
+    steps = 0;
+    gameOver = false;
 }
 
 void GameEngine::Run(Direction dir) {
@@ -24,21 +25,14 @@ void GameEngine::Run(Direction dir) {
     int boardWidth = _board->GetWidth();
     int boardHeight = _board->GetHeight();
     
-    if (head.x < 0) {
-        head.x = boardWidth - 1;
-    } else if (head.x >= boardWidth) {
-        head.x = 0;
-    }
+    if (head.x < 0) head.x = boardWidth - 1;
+    else if (head.x >= boardWidth) head.x = 0;
     
-    if (head.y < 0) {
-        head.y = boardHeight - 1;
-    } else if (head.y >= boardHeight) {
-        head.y = 0;
-    }
+    if (head.y < 0) head.y = boardHeight - 1;
+    else if (head.y >= boardHeight) head.y = 0;
     
-    auto& segments = _snake->GetSegments();
-    segments[0] = head;
-    
+    _snake->SetHeadPosition(head);
+
     if (head == _apple->GetPosition()) {
         _snake->Eat(*_apple);
         Point newApplePos = GenerateRandomApplePosition();
@@ -46,7 +40,7 @@ void GameEngine::Run(Direction dir) {
     }
     
     if (CheckCollision()) {
-        std::cout << "Game Over! Snake collided with itself.\n";
+        gameOver = true;
         return;
     }
     
@@ -54,6 +48,7 @@ void GameEngine::Run(Direction dir) {
     _painter->DrawBoard(boardWidth, boardHeight, snakeSegments, _apple->GetPosition());
     steps++;
 }
+
 
 bool GameEngine::CheckCollision() const {
     Point head = _snake->GetPosition();

@@ -14,6 +14,7 @@ class GameEngine {
     std::unique_ptr<Board> _board;
     std::unique_ptr<Painter> _painter;
     int steps = 0;
+    bool gameOver = false;
     
 public:
     GameEngine();
@@ -25,6 +26,7 @@ public:
     
     const Painter& GetPainter() const { return *_painter; }
     Painter& GetPainter() { return *_painter; }
+    bool IsGameOver() const { return gameOver; }
     
 private:
     bool IsPositionValid(const Point& pos) const;
