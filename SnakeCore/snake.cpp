@@ -17,7 +17,7 @@ bool Snake::operator!=(const Snake& other) const {
 }
 
 void Snake::Move(Direction direction) {
-    // compute new head based on current head (or default if empty)
+
     Point newHead(0,0);
     if (!_segments.empty()) newHead = _segments.front();
     
@@ -30,14 +30,13 @@ void Snake::Move(Direction direction) {
     
     if (_segments.empty()) {
         _segments.push_back(newHead);
-        // if grow was requested but snake was empty, keep it simple and reset flag
+
         if (_growNextMove) _growNextMove = false;
         return;
     }
     
-    // insert new head
+
     _segments.insert(_segments.begin(), newHead);
-    // if growth requested, keep tail (do not pop); otherwise pop tail
     if (_growNextMove) {
         _growNextMove = false;
     } else {
@@ -62,8 +61,8 @@ std::vector<Point>& Snake::GetSegments() {
 }
 
 void Snake::Eat(const Apple& apple) {
-    (void)apple; // avoid unused parameter warning
-    // request growth on next Move instead of immediately duplicating the tail
+    (void)apple;
+
     _growNextMove = true;
 }
 
