@@ -16,7 +16,6 @@ HEADERS += \
     board.hpp \
     snake.hpp \
     direction.hpp \
-    painter_base.hpp \
     painter.hpp \
     game_engine.hpp
 

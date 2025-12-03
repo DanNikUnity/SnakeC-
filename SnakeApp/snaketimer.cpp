@@ -1,4 +1,4 @@
-#include "timer.hpp"
+#include "snaketimer.hpp"
 
 SnakeTimer::SnakeTimer(QObject *parent) : QObject(parent) {
   m_timer = new QTimer(this);

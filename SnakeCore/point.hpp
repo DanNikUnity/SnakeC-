@@ -1,35 +1,52 @@
+/**
+ * @file point.hpp
+ * @brief Definiția structurii Point — coordonatele unui punct din joc.
+ *
+ * Proiect: Snake Game — Laborator 06
+ * Autor: Nicolaev Dan
+ * An: 2025
+ */
+
 #pragma once
 #include <iostream>
-#include <algorithm>
 
+/**
+ * @struct Point
+ * @brief Reprezintă o poziție în plan, prin coordonatele (x, y).
+ *
+ * Structura Point este utilizată în întreg jocul pentru:
+ * - poziția șarpelui
+ * - poziția mărului
+ * - verificări de coliziune
+ */
 struct Point {
-    int x;
-    int y;
-    
-    Point() : x(0), y(0) {}
-    Point(int _x, int _y) : x(_x), y(_y) {}
-    Point(const Point& other) = default;
-    Point& operator=(const Point& other) = default;
-    
-    bool operator==(const Point& other) const {
-        return x == other.x && y == other.y;
-    }
-    
-    bool operator!=(const Point& other) const {
-        return !(*this == other);
-    }
-    
-    bool operator<(const Point& other) const {
-        return (y < other.y) || (y == other.y && x < other.x);
-    }
-    
-    friend std::ostream& operator<<(std::ostream& os, const Point& p) {
-        os << "(" << p.x << ", " << p.y << ")";
-        return os;
-    }
-    
-    friend std::istream& operator>>(std::istream& is, Point& p) {
-        is >> p.x >> p.y;
-        return is;
-    }
+    int x; ///< Coordonata X
+    int y; ///< Coordonata Y
+
+    /**
+     * @brief Constructor implicit, setează (0,0).
+     */
+    Point();
+
+    /**
+     * @brief Constructor cu coordonate.
+     * @param _x coordonata X
+     * @param _y coordonata Y
+     */
+    Point(int _x, int _y);
+
+    /// Operator de egalitate.
+    bool operator==(const Point& other) const;
+
+    /// Operator de diferență.
+    bool operator!=(const Point& other) const;
+
+    /// Operator pentru sortare (folosit în teste/algoritmi).
+    bool operator<(const Point& other) const;
+
+    /// Serializare în flux.
+    friend std::ostream& operator<<(std::ostream& os, const Point& p);
+
+    /// Deserializare din flux.
+    friend std::istream& operator>>(std::istream& is, Point& p);
 };
