@@ -13,11 +13,11 @@ LIBS += -L../build/bin -lsnakecore
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    mainwidget.cpp \
-    timer.cpp
+    gamefieldwidget.cpp \
+    snaketimer.cpp
 
 HEADERS += \
     mainwindow.hpp \
-    mainwidget.hpp \
+    gamefieldwidget.hpp \
     gameoverdialog.hpp \
-    timer.hpp
+    snaketimer.hpp

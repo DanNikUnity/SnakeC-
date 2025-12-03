@@ -1,4 +1,6 @@
 #include "snake.hpp"
+#include <algorithm>
+
 
 Snake::Snake() {
     _segments.emplace_back(0, 0);
@@ -56,9 +58,6 @@ const std::vector<Point>& Snake::GetSegments() const {
     return _segments;
 }
 
-std::vector<Point>& Snake::GetSegments() {
-    return _segments;
-}
 
 void Snake::Eat(const Apple& apple) {
     (void)apple;

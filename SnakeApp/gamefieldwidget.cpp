@@ -1,4 +1,4 @@
-#include "mainwidget.hpp"
+#include "gamefieldwidget.hpp"
 #include <QKeyEvent>
 #include <QPainter>
 #include <QDebug>
